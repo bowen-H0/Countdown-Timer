@@ -1,7 +1,7 @@
 # Countdown-Timer
 Countdown Timer
 
-https://github.com/bowen-H0
+[https://github.com/bowen-H0](https://bowen-h0.github.io/Countdown-Timer/)
 
 
 bell.wav:
