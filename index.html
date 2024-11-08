@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+            transition: background-color 1s ease;
+        }
+
+        /* 主题样式 */
+        .theme-dark {
+            background: linear-gradient(135deg, #1e2022, #3e4347);
+            color: #ffffff;
+        }
+
+        .theme-light {
+            background: linear-gradient(135deg, #ffffff, #d3d3d3);
+            color: #333333;
+        }
+
+        .theme-blue {
+            background: linear-gradient(135deg, #001f3f, #00507a);
+            color: #7FDBFF;
+        }
+
+        /* Dark 主题的 Timer Container */
+        .theme-dark #timer-container {
+            background-color: #2b2e31;
+            border: 1px solid #4a4e52;
+            /* 比背景稍亮的灰色 */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Light 主题的 Timer Container */
+        .theme-light #timer-container {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            /* 比背景稍深的灰色边框 */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            /* 更淡的阴影效果 */
+        }
+
+        /* Blue 主题的 Timer Container */
+        .theme-blue #timer-container {
+            background: linear-gradient(135deg, #013a5b, #005f8a);
+            /* 渐变蓝色背景 */
+            border: 1px solid #7FDBFF;
+            /* 与主题文字颜色一致的边框 */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 复古主题 */
+        .theme-retro {
+            background: linear-gradient(135deg, #ffcc66, #ff9966);
+            color: #333333;
+        }
+
+        .theme-retro #timer-container {
+            background-color: #ffb366;
+            /* 温暖橙色背景 */
+            border: 2px solid #996633;
+            /* 复古棕色边框 */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .theme-retro #timerDisplay {
+            animation: scaleColorChange-sunset 1s ease infinite;
+        }
+        /* 科技主题 */
+        .theme-tech {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #66ffcc;
+        }
+
+        .theme-tech #timer-container {
+            background-color: #112a32;
+            /* 深色背景突出科技感 */
+            border: 1px solid #66ffcc;
+            /* 亮绿边框 */
+            box-shadow: 0px 4px 15px rgba(0, 255, 128, 0.5);
+            /* 轻微发光效果 */
+        }
+
+        /* 霓虹主题 */
+        .theme-neon {
+            background: linear-gradient(135deg, #141E30, #243B55);
+            color: #ff00ff;
+        }
+
+        .theme-neon #timer-container {
+            background-color: #33334d;
+            /* 深紫色背景 */
+            border: 2px solid #ff00ff;
+            /* 亮粉色边框 */
+            box-shadow: 0px 4px 15px rgba(255, 0, 255, 0.5);
+            /* 霓虹发光效果 */
+        }
+
+        /* 日落主题 */
+        .theme-sunset {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #2f2f2f;
+        }
+
+        .theme-sunset #timer-container {
+            background-color: #ff9a76;
+            /* 柔和橙色背景 */
+            border: 1px solid #e55d5d;
+            /* 红橙色边框 */
+            box-shadow: 0px 4px 10px rgba(255, 94, 77, 0.3);
+            /* 暖色阴影 */
+        }
+
+        .theme-sunset #timerDisplay {
+            animation: scaleColorChange-sunset 1s ease infinite;
+        }
+
+        /* 定义 Sunset 主题的动画效果 */
+        @keyframes scaleColorChange-sunset {
+            0% {
+                transform: scale(1);
+                color: #b8860b;
+                /* 深金色 */
+            }
+
+            25% {
+                transform: scale(1.05);
+                color: #a52a2a;
+                /* 棕红色 */
+            }
+
+            50% {
+                transform: scale(1.1);
+                color: #8b0000;
+                /* 深红色 */
+            }
+
+            75% {
+                transform: scale(1.05);
+                color: #a52a2a;
+                /* 棕红色 */
+            }
+
+            100% {
+                transform: scale(1);
+                color: #b8860b;
+                /* 深金色 */
+            }
+        }
+
+
+        /* 自然主题 */
+        .theme-nature {
+            background: linear-gradient(135deg, #56ab2f, #a8e063);
+            color: #264d00;
+        }
+
+        .theme-nature #timer-container {
+            background-color: #85c25c;
+            /* 柔和的绿色背景 */
+            border: 1px solid #407a20;
+            /* 深绿边框 */
+            box-shadow: 0px 4px 10px rgba(50, 100, 50, 0.3);
+            /* 自然柔和阴影 */
+        }
+        .theme-nature #timerDisplay {
+            animation: scaleColorChange-sunset 1s ease infinite;
+        }
+
+        /* 主容器样式 */
+        #timer-container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.5s ease;
+        }
+
+        /* 输入框样式 */
+        #input {
+            padding: 10px;
+            width: 180px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            text-align: center;
+            margin-right: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 按钮样式 */
+        button {
+            padding: 10px 16px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #34d058;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 倒计时显示样式 */
+        #timerDisplay {
+            font-size: 80px;
+            margin-top: 20px;
+            color: #FFD700;
+            animation: scaleColorChange 1s ease infinite;
+        }
+
+        /* 动画效果 */
+        @keyframes scaleColorChange {
+            0% {
+                transform: scale(1);
+                color: #FFD700;
+            }
+
+            50% {
+                transform: scale(1.1);
+                color: #FF8C00;
+            }
+
+            100% {
+                transform: scale(1);
+                color: #FFD700;
+            }
+        }
+
+        /* 主题选择框样式 */
+        #themeSelect {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+    <div id="timer-container">
+        <input type="number" id="input" placeholder="Enter seconds">
+        <button onclick="Start()">Start</button>
+        <select id="themeSelect" onchange="changeTheme()">
+            <option value="theme-dark">Dark</option>
+            <option value="theme-light">Light</option>
+            <option value="theme-blue">Blue</option>
+            <option value="theme-retro">Retro</option>
+            <option value="theme-tech">Tech</option>
+            <option value="theme-neon">Neon</option>
+            <option value="theme-sunset">Sunset</option>
+            <option value="theme-nature">Nature</option>
+        </select>
+        <div id="timer">
+            <h1 id="timerDisplay">Countdown Timer</h1>
+        </div>
+    </div>
+    <audio id="bellSound" src="bell.wav" preload="auto"></audio>
+    <script src="倒计时器.js"></script>
+    <script>
+        function changeTheme() {
+            const selectedTheme = document.getElementById('themeSelect').value;
+            document.body.className = selectedTheme;
+        }
+    </script>
+</body>
+
+</html>
